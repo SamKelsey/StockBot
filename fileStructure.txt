@@ -1,5 +1,6 @@
 stockbot
 	- StockBot.py
+	- DataHandler.py
 	- Algorithms
 		- Algorithm.py
 		- FirstAlgorithm.py
@@ -10,8 +11,7 @@ tests
 	- Simulation
 		- Simulation.py
 		- BankAccount.py
-		- DataHandler.py
 		- Data
 			- TSLA.csv
-			- AMZN.csv
-			- NIKE.csv
+			- DAL.csv	
+			- AAPL.csv
