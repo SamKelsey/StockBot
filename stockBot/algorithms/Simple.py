@@ -1,4 +1,4 @@
-from stockBot.Alogrithms.Algorithm import Algorithm
+from stockBot.algorithms.Algorithm import Algorithm
 
 class Simple(Algorithm):
     
