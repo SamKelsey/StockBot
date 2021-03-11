@@ -1,5 +1,7 @@
 class AlgorithmFactory:
-    def getAlgorithm(self, type):
+
+    @staticmethod
+    def getAlgorithm(type):
         if (type == "SIMPLE"):
             from .Simple import Simple
             return Simple()

@@ -9,9 +9,8 @@ class Simulation:
 
     @staticmethod
     def startSimulation():
-        print("starting sim...")
-        algorithmFactory = AlgorithmFactory()
-        algorithm = algorithmFactory.getAlgorithm("SIMPLE")
+        print("Running: Simulation")
+        algorithm = AlgorithmFactory.getAlgorithm("SIMPLE")
         print(algorithm)
 
 if __name__ == '__main__':
