@@ -3,7 +3,7 @@ import os
 conf_path = os.getcwd()
 sys.path.append(conf_path)
 
-from stockBot.Alogrithms.simple import Simple
+from stockBot.Alogrithms.Simple import Simple
 
 class Simulation:
 

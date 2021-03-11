@@ -6,4 +6,3 @@ class Algorithm(ABC):
     @abstractmethod
     def run(self):
         pass
-

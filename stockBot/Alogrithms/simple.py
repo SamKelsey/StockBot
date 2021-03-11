@@ -1,6 +1,7 @@
-from stockBot.Alogrithms.algorithm import Algorithm
+from stockBot.Alogrithms.Algorithm import Algorithm
 
 class Simple(Algorithm):
     
-    def run(self):
-        print("running")
+    @staticmethod
+    def run():
+        print("Running: Simple Algorithm")
