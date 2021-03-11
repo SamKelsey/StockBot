@@ -10,7 +10,6 @@ class StockBot:
     @staticmethod
     def startBot():
         print("starting bot")
-        Simple.run()
 
     def getStatus():
         return "running stockBot..."
