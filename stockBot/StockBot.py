@@ -1,7 +1,13 @@
 import os 
 import sys 
 print(sys.path)
-from Alogrithms.simple import Simple
+if __name__ == '__main__':
+    from Alogrithms.simple import Simple
+else:
+    from stockBot.Alogrithms.simple import Simple
+
 
 x = Simple()
 x.run()
+
+
