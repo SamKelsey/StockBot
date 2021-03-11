@@ -1,11 +1,13 @@
 import os 
 import sys 
-print(sys.path)
-if __name__ == '__main__':
-    from Alogrithms.simple import Simple
-else:
-    from stockBot.Alogrithms.simple import Simple
+conf_path = os.getcwd()
+sys.path.append(conf_path)
 
+from stockBot.Alogrithms.simple import Simple
+
+class StockBot:
+    def getStatus():
+        return "running stockBot..."
 
 x = Simple()
 x.run()

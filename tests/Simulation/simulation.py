@@ -2,10 +2,8 @@ import sys
 import os
 conf_path = os.getcwd()
 sys.path.append(conf_path)
-print(conf_path)
-from stockBot. import StockBot
 
-from simple import Simple
+from stockBot.Alogrithms.simple import Simple
 
 class Simulation:
 
