@@ -1,7 +1,7 @@
-class StockBot:
-    
-    def __init__(self):
-        self.status = "running stockBot..."
+import os 
+import sys 
+print(sys.path)
+from Alogrithms.simple import Simple
 
-    def getStatus(self):
-        return self.status
+x = Simple()
+x.run()
