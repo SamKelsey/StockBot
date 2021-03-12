@@ -1,17 +1,16 @@
 stockbot
 	- StockBot.py
-	- DataHandler.py
-	- Algorithms
-		- Algorithm.py
-		- FirstAlgorithm.py
+	- data_handler.py
+	- algorithms_package
+		- algorithms.py
+		- helper_modules.py
 tests
-	- Unit tests
+	- unit_tests
 		- Algorithm
 		- StockBot.py
-	- Simulation
-		- Simulation.py
-		- BankAccount.py
-		- Data
+	- simulation
+		- simulation.py
+		- test_data
 			- TSLA.csv
 			- DAL.csv	
 			- AAPL.csv

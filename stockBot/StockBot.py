@@ -3,16 +3,16 @@ import sys
 conf_path = os.getcwd()
 sys.path.append(conf_path)
 
-from stockBot.algorithms.Simple import Simple
+from stockBot.algorithms_package.algorithms import Simple
 
 class StockBot:
 
     @staticmethod
     def startBot():
-        print("starting bot")
+        return "Starting: Stockbot"
 
     def getStatus(self):
-        return "running stockBot..."
+        return "Running: Stockbot"
 
 if __name__ == '__main__':
     StockBot.startBot()
