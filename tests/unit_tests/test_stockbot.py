@@ -5,7 +5,7 @@ sys.path.append(conf_path)
 
 import unittest
 from stockBot.StockBot import StockBot
-from stockBot.algorithms_package.algorithms import Simple
+from stockBot.helpers.algorithms import Simple
 
 class Tests(unittest.TestCase):
     def test_bot_status(self):

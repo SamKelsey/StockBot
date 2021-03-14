@@ -3,7 +3,7 @@ import os
 conf_path = os.getcwd()
 sys.path.append(conf_path)
 
-from stockBot.algorithms.algorithms import AlgorithmFactory
+from stockBot.helpers.algorithms import AlgorithmFactory
 
 class Simulation:
 

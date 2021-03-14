@@ -3,7 +3,7 @@ import sys
 conf_path = os.getcwd()
 sys.path.append(conf_path)
 
-from stockBot.algorithms_package.algorithms import Simple
+from stockBot.helpers.algorithms import Simple
 
 class StockBot:
 
