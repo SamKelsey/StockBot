@@ -21,5 +21,13 @@ class Simple(Algorithm):
     def __init__(self):
         print("Created: Simple Algorithm")
     
-    def run(self):
+    def run(self, currRow, preRow):
+        
+        if (currRow > preRow):
+            return "Buy"
+        elif (currRow < preRow):
+            return "Sell"
+        else:
+            return "Nothing"
+        
         print("Running: Simple Algorithm")
