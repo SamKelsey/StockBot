@@ -1,7 +1,7 @@
 stockbot
 	- StockBot.py
 	- data_handler.py
-	- algorithms_package
+	- helpers
 		- algorithms.py
 		- helper_modules.py
 tests
