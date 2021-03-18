@@ -2,7 +2,7 @@ import abc
 from abc import ABC, abstractmethod
 
 from config.config import getConfig
-from stockBot.helpers.datahandler import DataHandler, DataHandlerFactory
+from stockBot.helpers.dataHandler import DataHandler, DataHandlerFactory
 
 class Algorithm(ABC): 
 
@@ -29,11 +29,15 @@ class Simple(Algorithm):
 
         dataHandler = getConfig().get("DataHandler", "DataClass")
         data = DataHandlerFactory.getDataHandler(dataHandler)
-        # if (currRow > preRow):
-        #     return "Buy"
-        # elif (currRow < preRow):
-        #     return "Sell"
-        # else:
-        #     return "Nothing"
-        
-        # print("Running: Simple Algorithm")
+
+        currRow, prevRow = data.getData()
+
+        currRow = currRow['50dayEWM']
+        prevRow = prevRow['50dayEWM']
+
+        if (currRow > prevRow
+            return "Buy"
+        elif (currRow < prevRow)
+            return "Sell"
+        else:
+            return "Nothing"

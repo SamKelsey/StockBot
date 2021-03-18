@@ -2,4 +2,6 @@ pandas
 pandas-datareader
 matplotlib
 
+configparser
+
 pyyaml

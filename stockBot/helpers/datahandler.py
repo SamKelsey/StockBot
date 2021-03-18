@@ -2,18 +2,21 @@ import abc
 from abc import ABC, abstractmethod
 
 class DataHandlerFactory:
+
     @staticmethod
     def getDataHandler(type):
         if (type == "LiveDataHandler"):
             return LiveDataHandler()
         elif (type == "TestDataHandler"):
+            from tests.simulation.testDataHandler import TestDataHandler
             return TestDataHandler()
 
 class DataHandler(ABC): 
 
     @abstractmethod
-    def run(self):
+    def getData(self):
         pass
+
 
 
 class LiveDataHandler(DataHandler):
@@ -21,14 +24,5 @@ class LiveDataHandler(DataHandler):
         pass
     # print("CREATED: DataHandler")
 
-    def run(self):
-        print("RUNNING")
-
-
-class TestDataHandler(DataHandler):
-    def __init__(self):
+    def getData(self):
         pass
-    # print("CREATED: TestDataHandler")
-
-    def run(self):
-        print("RUNNING")
