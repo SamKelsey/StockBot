@@ -1,6 +1,7 @@
 import abc 
 from abc import ABC, abstractmethod
 
+from config.config import getConfig
 from stockBot.helpers.datahandler import DataHandler, DataHandlerFactory
 
 class Algorithm(ABC): 
@@ -13,21 +14,21 @@ class Algorithm(ABC):
 class AlgorithmFactory:
 
     @staticmethod
-    def getAlgorithm(type, dataHandlerType):
+    def getAlgorithm(type):
         if (type == "SIMPLE"):
-            return Simple(dataHandlerType)
+            return Simple()
 
 
 class Simple(Algorithm):
     
-    def __init__(self, dataHandlerType):
-        self.dataHandler = dataHandlerType
-        print("Created: Simple Algorithm")
+    def __init__(self):
+        pass
+        # print("Created: Simple Algorithm")
     
     def run(self):
 
-        data = DataHandlerFactory.getDataHandler(self.dataHandler)
-        print(data)
+        dataHandler = getConfig().get("DataHandler", "DataClass")
+        data = DataHandlerFactory.getDataHandler(dataHandler)
         # if (currRow > preRow):
         #     return "Buy"
         # elif (currRow < preRow):
@@ -35,4 +36,4 @@ class Simple(Algorithm):
         # else:
         #     return "Nothing"
         
-        print("Running: Simple Algorithm")
+        # print("Running: Simple Algorithm")

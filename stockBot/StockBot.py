@@ -3,17 +3,15 @@ import sys
 conf_path = os.getcwd()
 sys.path.append(conf_path)
 
-import configparser
-
-from stockBot.helpers.algorithms import Simple
+from stockBot.helpers.algorithms import AlgorithmFactory, Simple
 
 class StockBot:
 
     @staticmethod
     def startBot():
-        configParser = configparser.ConfigParser()   
-        configFilePath = 'stockbot/config.ini'
-        return "Starting: Stockbot"
+        print("Starting: Stockbot")
+        algorithm = AlgorithmFactory.getAlgorithm("SIMPLE")
+        algorithm.run()
 
     def getStatus(self):
         return "Running: Stockbot"

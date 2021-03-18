@@ -3,35 +3,28 @@ import os
 conf_path = os.getcwd()
 sys.path.append(conf_path)
 
-from configparser import ConfigParser as CP
-
 from stockBot.helpers.algorithms import AlgorithmFactory
-from stockBot.helpers.configHandler import ConfigHandler
+from config.config import getConfig
 
 import pandas as pd
 
 class Simulation:
 
     def __init__(self):
-        configParser = CP()   
-        configFilePath = 'tests/simulation/config.ini'
-        configParser.read(configFilePath)
-        self.config = configParser
+        os.environ['PYTHON_ENV'] = "test"
 
 
     def startSimulation(self):
         print("Running: Simulation")
-        dataHandlerType = self.config.get("DataHandler", "DataClass")
-        algorithm = AlgorithmFactory.getAlgorithm("SIMPLE", dataHandlerType)
+        algorithm = AlgorithmFactory.getAlgorithm("SIMPLE")
         df = self.getDataFrame("AAPL")
         
-
-        for i in range(len(df)-1):
-            i+=1
-            row = df.iloc[i]
-            prevRow = df.iloc[i-1]
-            res = algorithm.run()
-            #print(res)
+        algorithm.run()
+        # for i in range(len(df)-1):
+        #     i+=1
+        #     row = df.iloc[i]
+        #     prevRow = df.iloc[i-1]
+        #     res = algorithm.run()
 
     def getDataFrame(self, ticker):
         path = os.path.join("tests/test_data", f"{ticker}.csv")
@@ -43,3 +36,4 @@ class Simulation:
 if __name__ == '__main__':
     sim = Simulation()
     sim.startSimulation()
+    
