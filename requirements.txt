@@ -5,3 +5,9 @@ matplotlib
 configparser
 
 pyyaml
+
+requests
+
+datetime
+
+python-binance
