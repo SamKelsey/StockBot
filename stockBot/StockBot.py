@@ -3,7 +3,9 @@ import sys
 conf_path = os.getcwd()
 sys.path.append(conf_path)
 
-from stockBot.helpers.algorithms import AlgorithmFactory, Simple
+print(sys.path)
+
+from stockBot.helpers.algorithms import AlgorithmFactory, Simple, YahScraper
 
 class StockBot:
 
@@ -17,4 +19,5 @@ class StockBot:
         return "Running: Stockbot"
 
 if __name__ == '__main__':
-    StockBot.startBot()
+    algo = YahScraper()
+    algo.getHtml()

@@ -11,3 +11,7 @@ requests
 datetime
 
 python-binance
+
+IBPy2
+
+ibapi

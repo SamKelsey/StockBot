@@ -1,6 +1,9 @@
 import abc 
 from abc import ABC, abstractmethod
 
+import requests
+from bs4 import BeautifulSoup
+
 from config.config import getConfig
 from stockBot.helpers.dataHandler import DataHandler, DataHandlerFactory
 
@@ -35,9 +38,18 @@ class Simple(Algorithm):
         currRow = currRow['50dayEWM']
         prevRow = prevRow['50dayEWM']
 
-        if (currRow > prevRow
+        if (currRow > prevRow):
             return "Buy"
-        elif (currRow < prevRow)
+        elif (currRow < prevRow):
             return "Sell"
         else:
             return "Nothing"
+
+class YahScraper(Algorithm):
+    def __init__(self):
+        self.URL = "https://in.finance.yahoo.com/most-active"
+        pass
+
+    def getHtml(self):
+        res = requests.get(self.URL)
+        print(res)
