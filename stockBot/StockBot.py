@@ -5,7 +5,7 @@ sys.path.append(conf_path)
 
 print(sys.path)
 
-from stockBot.helpers.algorithms import AlgorithmFactory, Simple
+from stockBot.helpers.algorithms import AlgorithmFactory, Simple, YahScraper
 
 class StockBot:
 
@@ -19,4 +19,5 @@ class StockBot:
         return "Running: Stockbot"
 
 if __name__ == '__main__':
-    StockBot.startBot()
+    bot = YahScraper()
+    bot.run()

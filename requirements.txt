@@ -1,1 +1,4 @@
 configparser
+pandas
+pandas-datareader
+beautifulsoup4
