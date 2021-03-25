@@ -9,4 +9,4 @@ COPY ./ .
 
 EXPOSE 8080
 
-CMD [ "python", "stockBot/stockBot.py" ]
+CMD [ "python", "stockBot/StockBot.py" ]

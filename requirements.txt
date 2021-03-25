@@ -1,17 +1,1 @@
-pandas
-pandas-datareader
-matplotlib
-
 configparser
-
-pyyaml
-
-requests
-
-datetime
-
-python-binance
-
-IBPy2
-
-ibapi
