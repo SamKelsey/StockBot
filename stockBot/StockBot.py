@@ -17,5 +17,5 @@ class StockBot:
         return "Running: Stockbot"
 
 if __name__ == '__main__':
-    bot = YahScraper()
-    bot.run()
+    algo = AlgorithmFactory.getAlgorithm("YAHSCRAPER")
+    algo.run()

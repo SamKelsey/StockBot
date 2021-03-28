@@ -25,7 +25,9 @@ class AlgorithmFactory:
 
     @staticmethod
     def getAlgorithm(type):
-        if (type == "SIMPLE"):
+        if (type == "YAHSCRAPER"):
+            return YahScraper()
+        elif (type == "SIMPLE"):
             return Simple()
 
 
