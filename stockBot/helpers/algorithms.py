@@ -54,7 +54,9 @@ class Simple(Algorithm):
 
 class YahScraper(Algorithm):
     # Number of days to calculate change over.
-    period = 2
+    period = 1
+    if (period < 2):
+        raise ValueError("period must be greater than 1")
 
 
     def __init__(self):
