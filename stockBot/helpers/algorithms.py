@@ -56,57 +56,56 @@ class Simple(Algorithm):
 
 class YahScraper(Algorithm):
     # Number of days to calculate change over.
-    period = 1
-    if (period < 2):
+    period = 3
+    if (period < 3):
         raise ValueError("period must be greater than 1")
 
-
-    def __init__(self):
-        self.URL = "https://finance.yahoo.com/most-active/"
-        self.tickers = []
-        pass
-
     def run(self):
-        self.tickerInfo = defaultdict(dict)
-        
-        self.getTickers()
-        # self.tickerInfo = {
-        #     'AAPL':{},
-        #     'SBUX':{}
-        # }
+        # tickerInfo = YahScraper.getTickers()
+        tickerInfo = {
+            'AAPL':{},
+            'SBUX':{}
+        }
 
-        self.getTickersData()
-        self.analyseTickers()
+        data = YahScraper.getTickersData(tickerInfo)
+        self.tickerInfo = YahScraper.analyseTickers(data, tickerInfo)
+        print(self.tickerInfo)
 
+    @staticmethod
+    def getTickers():
+        tickerInfo = defaultdict(dict)
+        url = "https://finance.yahoo.com/most-active/"
 
-    def getTickers(self):
-        res = requests.get(self.URL)
+        res = requests.get(url)
         soup = BeautifulSoup(res.content, "lxml")
         for item in soup.select('.simpTblRow'):
             symbol = item.select('[aria-label=Symbol]')[0].get_text()
-            self.tickerInfo[symbol] = {}
+            tickerInfo[symbol] = {}
+        return tickerInfo
 
-    def getTickersData(self):
+    @staticmethod
+    def getTickersData(tickerInfo):
         end_date = datetime.today().strftime('%Y-%m-%d')
         start_date = datetime.today() - timedelta(days=YahScraper.period)
         start_date = start_date.strftime('%Y-%m-%d')
 
-        tickers = list(self.tickerInfo.keys())
-        self.panel_data = data.DataReader(tickers, 'yahoo', start_date, end_date)
+        tickers = list(tickerInfo.keys())
+        return data.DataReader(tickers, 'yahoo', start_date, end_date)
     
-    def analyseTickers(self):
-        currPrices = self.panel_data.iloc[-1]['Adj Close']
-        prevPrices = self.panel_data.iloc[0]['Adj Close']
-        for ticker in self.tickerInfo:
+    @staticmethod
+    def analyseTickers(data, tickerInfo):
+        currPrices = data.iloc[-1]['Adj Close']
+        prevPrices = data.iloc[0]['Adj Close']
+        for ticker in tickerInfo:
             change = ((prevPrices[ticker] - currPrices[ticker])/prevPrices[ticker])*100
 
-            self.tickerInfo[ticker]["change"] = change
+            tickerInfo[ticker]["change"] = change
             
             if (change > 0):
-                self.tickerInfo[ticker]["result"] = "BUY"
+                tickerInfo[ticker]["result"] = "BUY"
             elif (change < 0):
-                self.tickerInfo[ticker]["result"] = "SELL"
+                tickerInfo[ticker]["result"] = "SELL"
             else:
-                self.tickerInfo[ticker]["result"] = "NONE"
+                tickerInfo[ticker]["result"] = "NONE"
 
-        print(self.tickerInfo)
+        return tickerInfo
