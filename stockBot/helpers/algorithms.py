@@ -13,6 +13,7 @@ from datetime import datetime, timedelta
 
 from config.config import getConfig
 from stockBot.helpers.dataHandler import DataHandler, DataHandlerFactory
+from stockBot.helpers.brokerFactory import BrokerFactory
 
 class Algorithm(ABC): 
 
@@ -58,7 +59,7 @@ class YahScraper(Algorithm):
     # Number of days to calculate change over.
     period = 3
     if (period < 3):
-        raise ValueError("period must be greater than 1")
+        raise ValueError("period must be greater than 2")
 
     def run(self):
         # tickerInfo = YahScraper.getTickers()
@@ -70,6 +71,10 @@ class YahScraper(Algorithm):
         data = YahScraper.getTickersData(tickerInfo)
         self.tickerInfo = YahScraper.analyseTickers(data, tickerInfo)
         print(self.tickerInfo)
+
+        broker = BrokerFactory.getBroker()
+        print(broker)
+        broker.buy()
 
     @staticmethod
     def getTickers():

@@ -12,3 +12,5 @@ def getConfig():
         configFilePath = 'config/dev-config.ini'
         configParser.read(configFilePath)
         return configParser
+    else:
+        raise Exception("No environment variable set.")

@@ -17,5 +17,8 @@ class StockBot:
         return "Running: Stockbot"
 
 if __name__ == '__main__':
+    # set env variable.
+    os.environ['PYTHON_ENV'] = "dev"
+
     algo = AlgorithmFactory.getAlgorithm("YAHSCRAPER")
     algo.run()

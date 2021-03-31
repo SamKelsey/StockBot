@@ -1,58 +1,81 @@
-# from binance.client import Client
-
-# client = Client()
-# client.API_URL = "https://testnet.binance.vision/api"
-
-# print(client.API_URL)
-
-# # get market depth
-# print(client.get_account())
-
-# # from binance.enums import *
-# # order = client.create_order(
-# #     symbol='LTCBTC',
-# #     side="BUY",
-# #     type="LIMIT",
-# #     timeInForce="GTC",
-# #     quantity=100,
-# #     price='0.001')
-
 from ibapi.client import EClient
 from ibapi.wrapper import EWrapper
 from ibapi.contract import Contract
+from ibapi.order import *
 
 import threading
 import time
 
-
 class IBapi(EWrapper, EClient):
 	def __init__(self):
 		EClient.__init__(self, self)
-	def tickPrice(self, reqId, tickType, price, attrib):
-		if tickType == 2 and reqId == 1:
-			print('The current ask price is: ', price)
 
-def run_loop():
-	app.run()
+	def nextValidId(self, orderId: int):
+		super().nextValidId(orderId)
+		self.nextorderId = orderId
+		print('The next valid order id is: ', self.nextorderId)
 
-app = IBapi()
-app.connect('127.0.0.1', 7497, 123)
+	def orderStatus(self, orderId, status, filled, remaining, avgFullPrice, permId, parentId, lastFillPrice, clientId, whyHeld, mktCapPrice):
+		print('orderStatus - orderid:', orderId, 'status:', status, 'filled', filled, 'remaining', remaining, 'lastFillPrice', lastFillPrice)
+	
+	def openOrder(self, orderId, contract, order, orderState):
+		print('openOrder id:', orderId, contract.symbol, contract.secType, '@', contract.exchange, ':', order.action, order.orderType, order.totalQuantity, orderState.status)
 
-#Start the socket in a thread
-api_thread = threading.Thread(target=run_loop, daemon=True)
-api_thread.start()
+	def execDetails(self, reqId, contract, execution):
+		print('Order Executed: ', reqId, contract.symbol, contract.secType, contract.currency, execution.execId, execution.orderId, execution.shares, execution.lastLiquidity)
 
-time.sleep(1) #Sleep interval to allow time for connection to server
 
-#Create contract object
-eurusd_contract = Contract()
-eurusd_contract.symbol = 'EUR'
-eurusd_contract.secType = 'CASH'
-eurusd_contract.exchange = 'IDEALPRO'
-eurusd_contract.currency = 'USD'
+	def buy(self):
+		def run_loop():
+			app.run()
 
-#Request Market Data
-app.reqMktData(1, eurusd_contract, '', False, False, [])
+		#Function to create FX Order contract
+		def FX_order(symbol):
+			contract = Contract()
+			contract.symbol = 'AAPL'
+			contract.secType = 'STK'
+			contract.exchange = 'SMART'
+			contract.currency = 'USD'
+			return contract
 
-time.sleep(10) #Sleep interval to allow time for incoming price data
-app.disconnect()
+		app = IBapi()
+		app.connect('127.0.0.1', 7497, 123)
+
+		app.nextorderId = None
+
+		#Start the socket in a thread
+		api_thread = threading.Thread(target=run_loop, daemon=True)
+		api_thread.start()
+
+		#Check if the API is connected via orderid
+		while True:
+			if isinstance(app.nextorderId, int):
+				print('connected')
+				break
+			else:
+				print('waiting for connection')
+				time.sleep(1)
+
+		#Create order object
+		order = Order()
+		order.action = 'BUY'
+		order.totalQuantity = 10
+		order.orderType = 'MKT'
+		order.lmtPrice = '1.10'
+
+		#Place order
+		app.placeOrder(app.nextorderId, FX_order('EURUSD'), order)
+		#app.nextorderId += 1
+
+		time.sleep(3)
+
+		#Cancel order 
+		# print('cancelling order')
+		# app.cancelOrder(app.nextorderId)
+
+		time.sleep(3)
+		app.disconnect()
+
+
+
+
