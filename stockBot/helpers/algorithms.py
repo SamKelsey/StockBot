@@ -14,6 +14,7 @@ from datetime import datetime, timedelta
 from config.config import getConfig
 from stockBot.helpers.dataHandler import DataHandler, DataHandlerFactory
 from stockBot.helpers.brokerFactory import BrokerFactory
+from stockBot.helpers.symbolInfo import SymbolInfo
 
 class Algorithm(ABC): 
 
@@ -63,17 +64,20 @@ class YahScraper(Algorithm):
 
     def run(self):
         # tickerInfo = YahScraper.getTickers()
-        tickerInfo = {
-            'AAPL':{},
-            'SBUX':{}
-        }
+        tickerInfo = [
+            {
+                "symbol": "AAPL"
+            },
+            {
+                "symbol": "SBUX"
+            }
+        ]
 
         data = YahScraper.getTickersData(tickerInfo)
         self.tickerInfo = YahScraper.analyseTickers(data, tickerInfo)
         print(self.tickerInfo)
 
         broker = BrokerFactory.getBroker()
-        print(broker)
         broker.buy()
 
     @staticmethod

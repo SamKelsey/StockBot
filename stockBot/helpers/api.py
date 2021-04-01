@@ -25,17 +25,23 @@ class IBapi(EWrapper, EClient):
 		print('Order Executed: ', reqId, contract.symbol, contract.secType, contract.currency, execution.execId, execution.orderId, execution.shares, execution.lastLiquidity)
 
 
-	def buy(self):
+	def buy(self, tickerInfo):
+
+		if not isinstance(ticker, list):
+			ticker = [ticker]
+
+
+
 		def run_loop():
 			app.run()
 
 		#Function to create FX Order contract
-		def FX_order(symbol):
+		def FX_order(symbol, secType = "STK", exchange = "SMART", currency = "USD"):
 			contract = Contract()
-			contract.symbol = 'AAPL'
-			contract.secType = 'STK'
-			contract.exchange = 'SMART'
-			contract.currency = 'USD'
+			contract.symbol = symbol
+			contract.secType = secType
+			contract.exchange = exchange
+			contract.currency = currency
 			return contract
 
 		app = IBapi()
@@ -57,11 +63,12 @@ class IBapi(EWrapper, EClient):
 				time.sleep(1)
 
 		#Create order object
-		order = Order()
-		order.action = 'BUY'
-		order.totalQuantity = 10
-		order.orderType = 'MKT'
-		order.lmtPrice = '1.10'
+		def order(action, totalQuantity, orderType = "MKT", lmtPrice = "1.10")
+			order = Order()
+			order.action = action
+			order.totalQuantity = totalQuantity
+			order.orderType = orderType
+			order.lmtPrice = lmtPrice
 
 		#Place order
 		app.placeOrder(app.nextorderId, FX_order('EURUSD'), order)
