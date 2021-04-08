@@ -2,3 +2,4 @@ configparser
 pandas
 pandas-datareader
 beautifulsoup4
+jsonschema

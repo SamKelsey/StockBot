@@ -1,7 +1,9 @@
 from jsonschema import validate
 
 class SymbolInfo:
-    symbolSchema = {
+
+    # TODO - Required fields and schema structure needs confirmed.
+    schema = {
         "title": "schema",
         "type": "object",
         "required": [
@@ -22,26 +24,9 @@ class SymbolInfo:
         }
     }
 
-    def __init__(self):
-        self.tickerInfo = {}
+    def __init__(self, values):
+        validate(values, SymbolInfo.schema)
+        self.__tickerInfo = values
 
-
-    def addSymbol(self, schema):
-        validate(schema, SymbolInfo.symbolSchema)
-        
-        # self.tickerInfo[object.keys()] = {object.value()}
-
-payload = {
-        "symbol": "AAPL",
-        "secType": "STK",
-        "exchange": "SMART",
-        "currency": "USD",
-        "action": "BUY",
-        "totalQuantity" : 0,
-        "orderType": "MTK",
-        "lmtPrice" : 1.10
-    }
-
-
-validator = SymbolInfo()
-validator.addSymbol(payload)
+    def getValue(self, key):
+        return self.__tickerInfo[key]
