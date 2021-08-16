@@ -1,3 +1,5 @@
 .vscode/settings.json
 *.pyc
 config/keys.json
+venv
+__pycache__

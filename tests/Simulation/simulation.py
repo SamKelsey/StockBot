@@ -1,12 +1,9 @@
 import sys
 import os
-conf_path = os.getcwd()
-sys.path.append(conf_path)
+sys.path.append(os.getcwd())
 
-from stockBot.helpers.algorithms import AlgorithmFactory
-from config.config import getConfig
-
-import pandas as pd
+from tests.simulation.data_handler import DataHandler
+import logging
 
 class Simulation: 
 
@@ -14,22 +11,21 @@ class Simulation:
         os.environ['PYTHON_ENV'] = "test"
 
 
-    def startSimulation(self):
-        print("Running: Simulation")
-        algorithm = AlgorithmFactory.getAlgorithm("SIMPLE")
-
+    def run(self):
+        logger.info('Running simulation.')
+        data_handler = DataHandler()
         while True:
-            try:
-                print(algorithm.run())
-            except IndexError:
-                print("Finished")
+            data_row, flag = data_handler.get_data()
+            if (flag == 1):
+                logger.info("Simulation complete.")
                 break
 
 
 
-
 if __name__ == '__main__':
+    logger = logging.getLogger()
+    logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
     sim = Simulation()
-    sim.startSimulation()
+    sim.run()
   
     
