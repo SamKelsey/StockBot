@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "stockbot"
+version = "0.1.0"
+description = "Stock trading bot"
+authors = ["Sam Kelsey <sam_kelsey@hotmail.co.uk>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+configparser = "^5.0.2"
+pandas = "^1.3.2"
+
+[tool.poetry.dev-dependencies]
+unittest = "^0.0"
+
+[tool.poetry.scripts]
+tests = "tests.unit_tests.simulation.test_data_handler"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
