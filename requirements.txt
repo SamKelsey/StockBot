@@ -4,3 +4,4 @@ pandas-datareader
 beautifulsoup4
 jsonschema
 ibapi
+coverage

@@ -3,9 +3,9 @@ import os
 conf_path = os.getcwd()
 sys.path.append(conf_path)
 
-import unittest
-from stockBot.StockBot import StockBot
-from stockBot.helpers.algorithms import AlgorithmFactory
+# import unittest
+# from stockBot.StockBot import StockBot
+# from stockBot.helpers.algorithms import AlgorithmFactory
 
 # class TestStockbot(unittest.TestCase):
 #     def test_bot_status(self):
