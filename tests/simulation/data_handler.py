@@ -1,7 +1,4 @@
-import sys
 import os
-sys.path.append(os.getcwd())
-
 import logging
 from typing import List, Tuple
 from pandas import read_csv

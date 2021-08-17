@@ -1,9 +1,4 @@
-import sys
-import os
-conf_path = os.getcwd()
-sys.path.append(conf_path)
-
-# import unittest
+import unittest
 # from stockBot.StockBot import StockBot
 # from stockBot.helpers.algorithms import AlgorithmFactory
 

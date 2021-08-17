@@ -1,12 +1,8 @@
-import sys
-import os
-sys.path.append(os.getcwd())
-
 from pandas import DataFrame
 
 import unittest
 from unittest.mock import patch
-from tests.simulation.data_handler import DataHandler
+from simulation.data_handler import DataHandler
 
 class TestDataHandler(unittest.TestCase):
 
