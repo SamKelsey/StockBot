@@ -34,15 +34,11 @@ class AlgorithmFactory:
 
 
 class Simple(Algorithm):
-    
-    def __init__(self):
-        pass
-        # print("Created: Simple Algorithm")
-    
+      
     def run(self):
 
-        dataHandler = getConfig().get("DataHandler", "DataClass")
-        data = DataHandlerFactory.getDataHandler(dataHandler)
+        dataConfig = getConfig().get("DataHandler", "DataClass")
+        data = DataHandlerFactory.getDataHandler(dataConfig)
 
         currRow, prevRow = data.getData()
 
