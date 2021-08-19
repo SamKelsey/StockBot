@@ -8,14 +8,16 @@ import logging
 class Simulation: 
 
     def __init__(self):
-        os.environ['PYTHON_ENV'] = "test"
+        os.environ['PYTHON_ENV'] = "sim"
 
 
     def run(self):
         logger.info('Running simulation.')
         data_handler = DataHandler()
+        def fun():
+            print("Switching DATASET")
         while True:
-            data_row, flag = data_handler.get_data()
+            data_row, flag = data_handler.get_data(fun)
             if (flag == 1):
                 logger.info("Simulation complete.")
                 break
