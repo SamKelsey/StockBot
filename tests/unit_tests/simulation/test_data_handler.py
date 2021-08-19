@@ -42,7 +42,7 @@ class TestDataHandler(unittest.TestCase):
 
     def test_when_curr_df_is_none_read_df(self):
         data_handler = DataHandler()
-        data_handler._read_df = MagicMock(return_value=self.get_example_df())
+        data_handler._read_df = MagicMock(return_value=self.get_example_df(4, 4))
         data_handler._curr_df = None
         data_handler.get_data()
         data_handler._read_df.assert_called_once()
@@ -50,9 +50,9 @@ class TestDataHandler(unittest.TestCase):
     def test_when_data_file_is_finished(self):
         data_handler = DataHandler()
         prev_curr_file = data_handler._curr_file
-        data_handler._curr_df = self.get_example_df()
+        data_handler._curr_df = self.get_example_df(4, 4)
 
-        new_df = self.get_example_df()
+        new_df = self.get_example_df(4, 4)
         data_handler._read_df = MagicMock(return_value=new_df)
         data_handler._index = new_df.shape[0]
         data_handler.get_data()
@@ -70,8 +70,14 @@ class TestDataHandler(unittest.TestCase):
             ["AAPL.csv", "T_X.csv", "examplE.csv"]
         )
 
-    def get_example_df(self) -> DataFrame:
-        np_array = np.random.randint(4, size=(4, 4))
+    """
+    @desc       Get a sample dataframe of ints and a specified size
+    @args       - rows: Number of rows in returned dataframe
+                - cols: Number of colums in returned dataframe
+    @returns    - Randomly generated Pandas Dataframe of ints.
+    """
+    def get_example_df(self, rows: int, cols: int) -> DataFrame:
+        np_array = np.random.randint(4, size=(rows, cols))
         return pd.DataFrame(np_array)
 
 if __name__ == "__main__":

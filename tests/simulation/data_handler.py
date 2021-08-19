@@ -8,13 +8,16 @@ from enum import Enum
 
 logger = logging.getLogger()
 
-""" Flag to show if datasets are finished and no more data is available. """
+""" 
+Flag to show if datasets are finished and no more data is available. 
+"""
 class StatusFlag(Enum):
     NOT_FINISHED = 0
     FINISHED = 1
 
 """
-A class responsible for delivering the test data in single, incrementing rows.
+A class to simulate calls to an api that returns up-to-date financial data on stocks.
+Successively call the get_data() method to retrieve a new row of data from your datasources.
 """
 class DataHandler():
 
@@ -55,7 +58,6 @@ class DataHandler():
         self._index += 1
         return row, self.status_flag
 
-
     """ 
     @desc       Read a list of all test data files to be used in simulation.
     @args       - path: Path to data files directory.
@@ -85,8 +87,6 @@ class DataHandler():
         if (i >= len(self._test_data_files)-1):
             return True
         return False
-
-
 
 
 if __name__ == "__main__":
