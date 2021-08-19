@@ -5,7 +5,7 @@ import pandas as pd
 from unittest.mock import MagicMock, patch
 
 from pandas.core.frame import DataFrame
-from tests.simulation.data_handler import DataHandler
+from tests.simulation.data_handler import DataHandler, StatusFlag
 
 class TestDataHandler(unittest.TestCase):
 
@@ -22,13 +22,13 @@ class TestDataHandler(unittest.TestCase):
         data_handler = DataHandler()
         data_handler._test_data_files = self.get_data_files()[1]
 
-        result1 = data_handler.data_is_finished(2)
-        result2 = data_handler.data_is_finished(1)
+        result1 = data_handler._data_is_finished(2)
+        result2 = data_handler._data_is_finished(1)
 
         self.assertEqual(True, result1)
         self.assertEqual(False, result2)
 
-    @patch("tests.simulation.data_handler.DataHandler.data_is_finished")
+    @patch("tests.simulation.data_handler.DataHandler._data_is_finished")
     def test_when_data_finished_flag_set(self, mock_data_is_finished):
         mock_data_is_finished.return_value = True
 
@@ -36,7 +36,7 @@ class TestDataHandler(unittest.TestCase):
         data_handler._read_df(1)
 
         self.assertEqual(
-            data_handler._finished_flag_status,
+            StatusFlag.FINISHED,
             data_handler.status_flag
         )
 
