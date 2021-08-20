@@ -17,6 +17,14 @@
       "request": "launch",
       "program": "stockBot/StockBot.py",
       "console": "integratedTerminal"
+    },
+    {
+      "name": "simulation.py",
+      "type": "python",
+      "request": "launch",
+      "program": "tests/simulation/simulation.py",
+      "console": "integratedTerminal",
+      "args": ["ExampleAlgo", "tests/test_data"]
     }
   ]
 }
