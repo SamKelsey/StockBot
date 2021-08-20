@@ -15,11 +15,12 @@ from config.config import getConfig
 from stockBot.helpers.dataHandler import DataHandler, DataHandlerFactory
 from stockBot.helpers.brokerFactory import BrokerFactory
 from stockBot.helpers.symbolInfo import SymbolInfo
+from stockBot.helpers.transaction import Action, Transaction
 
 class Algorithm(ABC): 
 
     @abstractmethod
-    def run(self):
+    def run(self) -> Transaction:
         pass
 
 
@@ -31,6 +32,12 @@ class AlgorithmFactory:
             return YahScraper()
         elif (type == "SIMPLE"):
             return Simple()
+        elif (type == "ExampleAlgo"):
+            return ExampleAlgo()
+
+class ExampleAlgo(Algorithm):
+    def run(self):
+        return Transaction(Action.BUY, 5, 245.30)
 
 
 class Simple(Algorithm):

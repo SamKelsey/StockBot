@@ -5,7 +5,6 @@ from ibapi.order import *
 
 import threading
 import time
-from accepts import accepts
 
 from stockBot.helpers.symbolInfo import SymbolInfo
 
@@ -27,11 +26,10 @@ class IBapi(EWrapper, EClient):
 	def execDetails(self, reqId, contract, execution):
 		print('Order Executed: ', reqId, contract.symbol, contract.secType, contract.currency, execution.execId, execution.orderId, execution.shares, execution.lastLiquidity)
 
-	@accepts(SymbolInfo)
 	def buy(self, tickerInfo):
 
-		if not isinstance(ticker, list):
-			ticker = [ticker]
+		# if not isinstance(ticker, list):
+		# 	ticker = [ticker]
 
 
 
