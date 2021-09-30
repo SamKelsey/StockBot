@@ -3,7 +3,7 @@ from enum import IntEnum
 
 
 """
-Integar enums to describe if a transaction's action.
+Integar enums to describe a transaction's purchasing action.
 """
 class Action(IntEnum):
     BUY = 0
@@ -11,7 +11,7 @@ class Action(IntEnum):
     NOTHING = 2
 
 """
-A dataclass to describe an Algorithm's decision.
+Used by Brokers to perform purchasing actions
 """
 @dataclass
 class Transaction():

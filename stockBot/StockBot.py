@@ -11,7 +11,7 @@ class StockBot:
     def startBot():
         print("Starting: Stockbot")
         algorithm = AlgorithmFactory.getAlgorithm("SIMPLE")
-        algorithm.run()
+        algorithm.start()
 
     def getStatus(self):
         return "Running: Stockbot"
@@ -21,4 +21,4 @@ if __name__ == '__main__':
     os.environ['PYTHON_ENV'] = "dev"
 
     algo = AlgorithmFactory.getAlgorithm("YAHSCRAPER")
-    algo.run()
+    algo.start()

@@ -12,40 +12,59 @@ from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 
 from config.config import getConfig
-from stockBot.helpers.dataHandler import DataHandler, DataHandlerFactory
-from stockBot.helpers.brokerFactory import BrokerFactory
-from stockBot.helpers.symbolInfo import SymbolInfo
-from stockBot.helpers.transaction import Action, Transaction
+from stockBot.helpers.data_source import DataSource, DataSourceFactory
+from stockBot.helpers.brokers import BrokerFactory, Broker
+from stockBot.helpers.transaction import Transaction, Action
 
 class Algorithm(ABC): 
 
+    def __init__(self, broker: Broker, data_source: DataSource):
+        self.broker = broker
+        self.data_source = data_source
+
+    """
+    @desc       Kicks off an algorithm, against a given stock, which runs indefinitely.
+    @args       - stock_ticker: A string that identifies a stock.
+    @returns    - Nothing
+    """
     @abstractmethod
-    def run(self) -> Transaction:
+    def start(self, stock_ticker: str) -> None:
         pass
 
 
 class AlgorithmFactory:
 
     @staticmethod
-    def getAlgorithm(type):
+    def getAlgorithm(type, broker: Broker, data_source: DataSource):
         if (type == "YAHSCRAPER"):
-            return YahScraper()
+            return YahScraper(broker, data_source)
         elif (type == "SIMPLE"):
-            return Simple()
+            return Simple(broker, data_source)
         elif (type == "ExampleAlgo"):
-            return ExampleAlgo()
+            return ExampleAlgo(broker, data_source)
+
+
 
 class ExampleAlgo(Algorithm):
-    def run(self):
-        return Transaction(Action.BUY, 5, 245.30)
+    def start(self, ticker):
+        data = self.data_source.get_data(ticker)
+        transaction = Transaction(
+            Action.BUY,
+            100,
+            30.00
+        )
+        receipt = self.broker.place_order(transaction)
+        print(receipt.curr_balance)
+        
+        
 
 
 class Simple(Algorithm):
       
-    def run(self):
+    def start(self):
 
         dataConfig = getConfig().get("DataHandler", "DataClass")
-        data = DataHandlerFactory.getDataHandler(dataConfig)
+        data = DataSourceFactory.getDataHandler(dataConfig)
 
         currRow, prevRow = data.getData()
 
@@ -65,7 +84,7 @@ class YahScraper(Algorithm):
     if (period < 3):
         raise ValueError("period must be greater than 2")
 
-    def run(self):
+    def start(self):
         # tickerInfo = YahScraper.getTickers()
         tickerInfo = [
             {
