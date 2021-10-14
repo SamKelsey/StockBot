@@ -1,20 +1,16 @@
-import abc 
 from abc import ABC, abstractmethod
-
-import pandas as pd
 from pandas_datareader import data
-
 from collections import defaultdict
-
 import requests
+import logging
 from bs4 import BeautifulSoup
-
 from datetime import datetime, timedelta
-
 from config.config import getConfig
 from stockBot.helpers.data_source import DataSource, DataSourceFactory
-from stockBot.helpers.brokers import BrokerFactory, Broker
+from stockBot.helpers.brokers import BrokerException, BrokerFactory, Broker
 from stockBot.helpers.transaction import Transaction, Action
+
+logger = logging.getLogger()
 
 class Algorithm(ABC): 
 
@@ -48,28 +44,43 @@ class AlgorithmFactory:
 class ExampleAlgo(Algorithm):
 
     def __init__(self, broker: Broker, data_source: DataSource):
-        self.rand_bool = False
+        self.counter = 0
+        self.action = Action.BUY
         super().__init__(broker, data_source)
 
     def start(self, *stock_tickers):
         while True:
             data = self.data_source.get_data(stock_tickers[0])
-            self.rand_bool = not self.rand_bool
-            if (self.rand_bool):
+
+            if (self.counter >= 11):
+                self.counter = 0
+
+            if (self.counter == 10):
                 transaction = Transaction(
                     Action.BUY,
-                    100,
-                    30.00,
-                    "AAPL"
+                    'AAPL',
+                    1,
+                    data['High'],
+                )
+            elif (self.counter == 5):
+                transaction = Transaction(
+                    Action.SELL,
+                    "AAPL",
+                    1,
+                    data['High'],
                 )
             else:
                 transaction = Transaction(
-                    Action.SELL,
-                    100,
-                    30.00,
-                    "AAPL"
+                    Action.NOTHING
                 )
-            receipt = self.broker.place_order(transaction)
+
+            try:
+                receipt = self.broker.place_order(transaction)
+            except BrokerException as e:
+                logger.info(e)
+                pass
+
+            self.counter += 1
         
         
 

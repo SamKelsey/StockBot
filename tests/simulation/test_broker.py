@@ -23,11 +23,15 @@ class TestBroker(Broker):
         
         func = switches.get(
             transaction.action, 
-            lambda: "Doing nothing"
+            lambda self : "Doing nothing"
         )
 
         func(transaction)
         return Receipt(ReceiptStatus.SUCCESS, 100, 10)
+
+    ''' TODO: Returns bank balance + value of stock assets owned. '''
+    def get_total_equity(self):
+        pass
 
     def buy_stock(self, transaction: Transaction):
 
@@ -42,7 +46,7 @@ class TestBroker(Broker):
         self.portfolio[transaction.stock_ticker] = \
             self.portfolio.get(transaction.stock_ticker, 0) + transaction.stock_qty
 
-        logger.info(f"Bought {transaction.stock_ticker}. Current balance: {self.balance}")
+        logger.info(f"Bought {transaction.stock_ticker}. Current balance: {round(self.balance, 2)}")
 
     def sell_stock(self, transaction: Transaction):
 
@@ -57,7 +61,7 @@ class TestBroker(Broker):
         self.portfolio[transaction.stock_ticker] = \
             self.portfolio[transaction.stock_ticker] - transaction.stock_qty
 
-        logger.info(f"Sold {transaction.stock_ticker}. Current balance: {self.balance}")
+        logger.info(f"Sold {transaction.stock_ticker}. Current balance: {round(self.balance, 2)}")
 
 if __name__ == "__main__":
     acc = TestBroker(10000)

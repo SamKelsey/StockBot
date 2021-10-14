@@ -4,6 +4,7 @@ import logging
 from tests.simulation.test_data_source import TestDataSource, FinishedTestDataException
 from tests.simulation.test_broker import TestBroker
 from stockBot.helpers.algorithms import AlgorithmFactory
+from stockBot.helpers.brokers import BrokerException
 
 data_source = TestDataSource()
 broker = TestBroker(100_000)
@@ -19,7 +20,8 @@ def main():
     try:
         algo.start("AAPL")
     except FinishedTestDataException as e:
-        logger.info(f"Test finished for {e.ticker}")
+        logger.info(f"Test finished for {e.ticker}. Final balance: {broker.get_total_equity()}")
+
 
 if __name__ == '__main__':
     os.environ['PYTHON_ENV'] = "test"

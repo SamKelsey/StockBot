@@ -73,5 +73,5 @@ if __name__ == "__main__":
         try:
             data_source.get_data("AAPL")
         except FinishedTestDataException as e:
-            print(e.ticker)
+            logger.error(e.ticker)
             break
