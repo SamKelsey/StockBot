@@ -25,6 +25,11 @@ class Receipt():
     curr_balance: float         # Current bank acc balance.
     total_change: float         # Total change in value in bank acc.
 
+class BrokerException(Exception):
+	def __init__(self, message):
+		super().__init__(message)
+
+
 class Broker(ABC):
 
 	@abstractmethod

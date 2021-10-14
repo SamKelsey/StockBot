@@ -19,6 +19,7 @@ class Transaction():
     action: Action          # To buy/sell/nothing.
     stock_qty: int          # Quantity of stocks to perform action on.
     stock_price: float      # Price of a single stock at time of transaction.
+    stock_ticker: str       # Ticker of the stock.
 
     def get_total_price(self) -> float:
         return self.stock_price * self.stock_qty

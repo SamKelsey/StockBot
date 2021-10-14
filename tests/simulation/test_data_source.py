@@ -8,7 +8,7 @@ from pandas.core.series import Series
 
 logger = logging.getLogger()
 
-class FinishedTestData(StopIteration):
+class FinishedTestDataException(StopIteration):
 
     def __init__(self, ticker: str):
         self.ticker = ticker
@@ -42,7 +42,7 @@ class TestDataSource(DataSource):
         try:
             return next(self.test_data[ticker])[1]
         except StopIteration:
-            raise FinishedTestData(ticker)
+            raise FinishedTestDataException(ticker)
 
 
     """ 
@@ -72,6 +72,6 @@ if __name__ == "__main__":
 
         try:
             data_source.get_data("AAPL")
-        except FinishedTestData as e:
+        except FinishedTestDataException as e:
             print(e.ticker)
             break

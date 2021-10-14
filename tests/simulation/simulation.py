@@ -1,7 +1,7 @@
 import os
 import sys
 import logging
-from tests.simulation.test_data_source import TestDataSource
+from tests.simulation.test_data_source import TestDataSource, FinishedTestDataException
 from tests.simulation.test_broker import TestBroker
 from stockBot.helpers.algorithms import AlgorithmFactory
 
@@ -15,8 +15,11 @@ def main():
         argv = ["ExampleAlgo", "tests/test_data"]
 
     algo = AlgorithmFactory.getAlgorithm(argv[0], broker, data_source)
-    # Run simulation in try-catch block and catch out-of-data errors then display final balance.
-    algo.start("any string")
+
+    try:
+        algo.start("AAPL")
+    except FinishedTestDataException as e:
+        logger.info(f"Test finished for {e.ticker}")
 
 if __name__ == '__main__':
     os.environ['PYTHON_ENV'] = "test"

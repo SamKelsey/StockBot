@@ -24,11 +24,11 @@ class Algorithm(ABC):
 
     """
     @desc       Kicks off an algorithm, against a given stock, which runs indefinitely.
-    @args       - stock_ticker: A string that identifies a stock.
+    @args       - stock_tickers(s): A tuple of strings that identifies stocks.
     @returns    - Nothing
     """
     @abstractmethod
-    def start(self, stock_ticker: str) -> None:
+    def start(self, *stock_tickers: str) -> None:
         pass
 
 
@@ -46,15 +46,30 @@ class AlgorithmFactory:
 
 
 class ExampleAlgo(Algorithm):
-    def start(self, ticker):
-        data = self.data_source.get_data(ticker)
-        transaction = Transaction(
-            Action.BUY,
-            100,
-            30.00
-        )
-        receipt = self.broker.place_order(transaction)
-        print(receipt.curr_balance)
+
+    def __init__(self, broker: Broker, data_source: DataSource):
+        self.rand_bool = False
+        super().__init__(broker, data_source)
+
+    def start(self, *stock_tickers):
+        while True:
+            data = self.data_source.get_data(stock_tickers[0])
+            self.rand_bool = not self.rand_bool
+            if (self.rand_bool):
+                transaction = Transaction(
+                    Action.BUY,
+                    100,
+                    30.00,
+                    "AAPL"
+                )
+            else:
+                transaction = Transaction(
+                    Action.SELL,
+                    100,
+                    30.00,
+                    "AAPL"
+                )
+            receipt = self.broker.place_order(transaction)
         
         
 

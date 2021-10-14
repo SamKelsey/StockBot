@@ -1,8 +1,4 @@
-import os 
-import sys 
-conf_path = os.getcwd()
-sys.path.append(conf_path)
-
+import os
 from stockBot.helpers.algorithms import AlgorithmFactory, Simple, YahScraper
 
 class StockBot:
