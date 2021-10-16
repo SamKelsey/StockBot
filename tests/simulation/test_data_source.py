@@ -24,10 +24,14 @@ class TestDataSource(DataSource):
     test_data_files_loc: str                    # Test data directory from root
     test_data_file_names: List[str]             # List of tickers in the test data.
     test_data: Dict                             # Dictionary of iterable test data df's
+    prev_price: float                           # Last known price of the stock
+    curr_price: float                           # Current price of the stock
 
     def __init__(self, test_data_files_loc="tests/test_data"):
         self.test_data_file_names = self._read_test_data_files(test_data_files_loc)
         self.test_data = {}
+        self.prev_price = None
+        self.curr_price = None
         for file in self.test_data_file_names:
             self.test_data[file[:-4]] = TestDataSource._read_df_to_iterable(test_data_files_loc, file)
 
@@ -40,7 +44,9 @@ class TestDataSource(DataSource):
     """
     def get_data(self, ticker: str) -> Series:
         try:
-            return next(self.test_data[ticker])[1]
+            self.prev_price = self.curr_price
+            self.curr_price = next(self.test_data[ticker])[1]
+            return self.curr_price
         except StopIteration:
             raise FinishedTestDataException(ticker)
 

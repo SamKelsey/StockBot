@@ -11,7 +11,7 @@ class TestBroker(Broker):
     portfolio: dict             # Map of units of stock owned per ticker.
 
     def __init__(self, starting_balance: int):
-        self.balance = self.starting_balance = starting_balance
+        self.balance = starting_balance
         self.portfolio = {}
 
     
@@ -29,9 +29,14 @@ class TestBroker(Broker):
         func(transaction)
         return Receipt(ReceiptStatus.SUCCESS, 100, 10)
 
-    ''' TODO: Returns bank balance + value of stock assets owned. '''
-    def get_total_equity(self):
-        pass
+    """ 
+    @desc       Returns the total value of assets owned (stock + cash)
+    @args       - stock_price: A float of the current price of the stock owned.
+    @returns    - Float value of total assets owned.
+    """
+    def get_total_equity(self, stock_price: float):
+        stock_assets = next(iter(self.portfolio.values())) * stock_price['Close']
+        return stock_assets + self.balance
 
     def buy_stock(self, transaction: Transaction):
 
