@@ -35,7 +35,7 @@ class TestBroker(Broker):
     @returns    - Float value of total assets owned.
     """
     def get_total_equity(self, stock_price: float):
-        stock_assets = next(iter(self.portfolio.values())) * stock_price['Close']
+        stock_assets = next(iter(self.portfolio.values())) * stock_price
         return stock_assets + self.balance
 
     def buy_stock(self, transaction: Transaction):
@@ -51,7 +51,7 @@ class TestBroker(Broker):
         self.portfolio[transaction.stock_ticker] = \
             self.portfolio.get(transaction.stock_ticker, 0) + transaction.stock_qty
 
-        logger.info(f"Bought {transaction.stock_ticker}. Current balance: {round(self.balance, 2)}")
+        logger.info(f"Bought {transaction.stock_ticker}. Current balance: {round(self.get_total_equity(transaction.stock_price), 2)}")
 
     def sell_stock(self, transaction: Transaction):
 

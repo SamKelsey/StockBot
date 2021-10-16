@@ -20,7 +20,7 @@ def main():
     try:
         algo.start("AAPL")
     except FinishedTestDataException as e:
-        logger.info(f"Test finished for {e.ticker}. Final balance: {round(broker.get_total_equity(data_source.prev_price), 2)}")
+        logger.info(f"Test finished for {e.ticker}. Final balance: {round(broker.get_total_equity(data_source.prev_price['Close']), 2)}")
 
 
 if __name__ == '__main__':
